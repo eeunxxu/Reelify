@@ -16,6 +16,7 @@ import UserFollowerView from "@/views/Community/UserFollowerView.vue";
 import UserFollowingView from "@/views/Community/UserFollowingView.vue";
 import UserUpdateView from "@/views/Accounts/UserUpdateView.vue";
 import { useAccountStore } from "@/stores/accounts";
+import UserProfileEditView from "@/views/Community/UserProfileEditView.vue";
 import ReelBotView from "@/views/Community/ReelBotView.vue";
 
 const router = createRouter({
@@ -163,6 +164,19 @@ const router = createRouter({
       path: "/:username/user-update",
       name: "UserUpdateView",
       component: UserUpdateView,
+      beforeEnter: (to, from, next) => {
+        const store = useAccountStore();
+        if (!store.isLogin) {
+          next({ name: "HomeView" });
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: "/:username/profile-img-edit",
+      name: "UserProfileEditView",
+      component: UserProfileEditView,
       beforeEnter: (to, from, next) => {
         const store = useAccountStore();
         if (!store.isLogin) {
